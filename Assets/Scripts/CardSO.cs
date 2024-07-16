@@ -3,7 +3,6 @@ using UnityEngine;
 public enum CardType {
     Attack,
     Boom,
-    Cat,
     Defuse,
     Favor, 
     Nope,
