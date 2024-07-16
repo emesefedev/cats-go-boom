@@ -21,6 +21,7 @@ public class CardUI : MonoBehaviour
     private readonly static string[] cardTitles = new string[]{
         "Attaaack",        // Attack
         "Cat went boom",   // Boom
+        "Cat Card",        // Cat
         "Defuse",          // Defuse
         "Do me a favor",   // Favor
         "Nope",            // Nope
@@ -37,7 +38,9 @@ public class CardUI : MonoBehaviour
         cardBorder.color = cardColor;
         cardIllustration.color = cardColor;
 
-        titleTMP.text = cardTitles[typeIndex];
+        titleTMP.text = cardSO.cardType == CardType.Cat 
+        ? cardSO.cardSubType.ToString()
+        : cardTitles[typeIndex];
         descriptionTMP.text = cardSO.description;
     }
 }

@@ -8,6 +8,7 @@ public static class Colors
     public readonly static Color[] cardColors = new Color[]{
         new Color(0.894f, 0.322f, 0.035f),  // Attack
         new Color(0, 0, 0),                 // Boom
+        new Color (0.941f, 0.941f, 0.941f), // Cat
         new Color(0.494f, 0.569f, 0.027f),  // Defuse
         new Color(0.592f, 0.549f, 0.514f),  // Favor
         new Color(0.592f, 0, 0.005f),       // Nope

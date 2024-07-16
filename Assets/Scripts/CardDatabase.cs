@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CardDatabase : MonoBehaviour
@@ -12,6 +11,7 @@ public class CardDatabase : MonoBehaviour
     private int[] totalCardsPerType = new int[]{
         4,   // Attack
         1,   // Boom
+        20,  // Cat
         6,   // Defuse
         4,   // Favor
         5,   // Nope
