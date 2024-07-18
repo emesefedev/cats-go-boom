@@ -65,6 +65,9 @@ public class CardDatabase : MonoBehaviour
     {
         CardSO card = drawDeck[0];
         drawDeck.RemoveAt(0);
+
+        DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
+
         return card;
     }
 }
