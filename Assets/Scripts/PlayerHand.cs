@@ -3,9 +3,20 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
+    public static PlayerHand Instance { get; private set;}
+
     [SerializeField] private List<CardSO> hand = new List<CardSO>();
 
     [SerializeField] private Transform cardPrefab;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("More than one instance");
+        }
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -16,19 +27,21 @@ public class PlayerHand : MonoBehaviour
     {
         for(int i = 0; i < 7; i++)
         {
-            hand.Add(CardDatabase.Instance.DrawCard());
+            PlayerDrawCard();
         }
-
-        UpdatePlayerDeckUI();
     }
 
-    private void UpdatePlayerDeckUI()
+    private void UpdatePlayerDeckUI(CardSO cardSO)
     {
-        foreach(CardSO cardSO in hand)
-        {
-            Transform card = Instantiate(cardPrefab, transform);
-            CardUI cardUI = card.GetComponent<CardUI>();
-            cardUI.SetCard(cardSO);
-        }
+        Transform card = Instantiate(cardPrefab, transform);
+        CardUI cardUI = card.GetComponent<CardUI>();
+        cardUI.SetCard(cardSO);
+    }   
+
+    public void PlayerDrawCard()
+    {
+        CardSO card = CardDatabase.Instance.DrawCard();
+        hand.Add(card);
+        UpdatePlayerDeckUI(card);
     }
 }
