@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: DefuseCard
   m_EditorClassIdentifier: 
   description: Instead of going boom, put your last drawn card back into the deck.
-  cardType: 2
+  cardType: 3
+  cardSubType: 0

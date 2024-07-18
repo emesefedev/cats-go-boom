@@ -21,6 +21,7 @@ public class PlayerHand : MonoBehaviour
     private void Start()
     {
         InitializePlayerDeck();
+        CardDatabase.Instance.CompleteDrawDeck();
     }
 
     private void InitializePlayerDeck()

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-    /// If this enum is modified, totalCardsPerType, cardColors and cardTitles must also be modified
+    /// If this enum is modified, cardColors and cardTitles must also be modified
 /// </summary>
 public enum CardType {
     Attack,

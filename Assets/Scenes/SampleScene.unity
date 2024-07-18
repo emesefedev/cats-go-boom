@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardsInDrawDeckText: {fileID: 1626634006}
-  drawButton: {fileID: 0}
+  drawButton: {fileID: 538771707}
 --- !u!1001 &426568806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1535,6 +1535,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd77d2b0f2d4343d38e81f6cabf15afb, type: 2}
   - {fileID: 11400000, guid: 2e05d7f0f7a02449880fdc8d9d235e8b, type: 2}
   - {fileID: 11400000, guid: c2963d920dba841999956e111c032343, type: 2}
+  - {fileID: 11400000, guid: 8ef496d490ecc458d9b65734ae0fc617, type: 2}
+  - {fileID: 11400000, guid: 98a73616035b54a40be2cea38d91f422, type: 2}
+  - {fileID: 11400000, guid: e4ce8909a71ee41edabe2d7131cd29cf, type: 2}
+  - {fileID: 11400000, guid: 4621f5b14e69245089c08027c830d879, type: 2}
   - {fileID: 11400000, guid: 00a6b833e87d049a583b8500daa42c2f, type: 2}
   - {fileID: 11400000, guid: c56d3f6678fcb4c27a8ba64db98e35e5, type: 2}
   - {fileID: 11400000, guid: 6567e92446bab4ce1824a68807a823c7, type: 2}
