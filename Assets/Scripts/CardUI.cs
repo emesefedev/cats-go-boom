@@ -4,13 +4,15 @@ using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour
 {
-    [SerializeField] private CardSO cardSO;
-
     [SerializeField] private Image cardBorder;
     [SerializeField] private Image cardIllustration;
+    
+    [SerializeField] private GameObject cardBack;
 
     [SerializeField] private TextMeshProUGUI titleTMP;
     [SerializeField] private TextMeshProUGUI descriptionTMP;
+
+    private bool isFaceDown;
 
     private int typeIndex;
     private Color cardColor;
@@ -32,6 +34,19 @@ public class CardUI : MonoBehaviour
 
     private void Awake()
     {
+        FaceDownCard(isFaceDown);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F)){
+            FaceDownCard(isFaceDown);
+            isFaceDown = !isFaceDown;
+        }
+    }
+
+    public void SetCard(CardSO cardSO)
+    {
         typeIndex = (int)cardSO.cardType;
         cardColor = Colors.cardColors[typeIndex];
 
@@ -42,5 +57,11 @@ public class CardUI : MonoBehaviour
         ? cardSO.cardSubType.ToString()
         : cardTitles[typeIndex];
         descriptionTMP.text = cardSO.description;
+    }
+
+    private void FaceDownCard(bool isFaceDown)
+    {
+        this.isFaceDown = isFaceDown;
+        cardBack.SetActive(isFaceDown);
     }
 }

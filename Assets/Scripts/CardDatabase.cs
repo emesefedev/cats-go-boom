@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CardDatabase : MonoBehaviour
 {
+    public static CardDatabase Instance { get; private set;}
+
     [SerializeField] private CardSO[] cardsSO;
 
     /// <summary>
@@ -20,29 +22,49 @@ public class CardDatabase : MonoBehaviour
         4    // Skip
     };
 
-    public List<CardSO> deck;
+    [SerializeField] private List<CardSO> drawDeck = new List<CardSO>();
+    [SerializeField] private List<CardSO> discardDeck = new List<CardSO>();
 
     private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("More than one instance");
+        }
+        Instance = this;
+
+        InitializeDrawDeck();
+        //ShuffleDeck();
+    }
+
+    private void InitializeDrawDeck()
     {
         for (int i = 0; i < totalCardsPerType.Length; i++)
         {
             for (int j = 0; j < totalCardsPerType[i]; j++)
             {
-                deck.Add(cardsSO[i]);
+                drawDeck.Add(cardsSO[i]);
             }
         }
     }
 
     private void ShuffleDeck()
     {
-        for(int i = 0; i < deck.Count; i++)
+        for(int i = 0; i < drawDeck.Count; i++)
         {
-            int randomCardIdx = Random.Range(i, deck.Count);
-            CardSO randomCard = deck[randomCardIdx];
+            int randomCardIdx = Random.Range(i, drawDeck.Count);
+            CardSO randomCard = drawDeck[randomCardIdx];
 
-            deck[randomCardIdx] = deck[i];
+            drawDeck[randomCardIdx] = drawDeck[i];
 
-            deck[i] = randomCard;
+            drawDeck[i] = randomCard;
         }
+    }
+
+    public CardSO DrawCard()
+    {
+        CardSO card = drawDeck[0];
+        drawDeck.RemoveAt(0);
+        return card;
     }
 }

@@ -300,9 +300,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119521e707e5e410a850945d064423ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSO: {fileID: 11400000, guid: c2963d920dba841999956e111c032343, type: 2}
+  cardSO: {fileID: 0}
   cardBorder: {fileID: 8601668450328712727}
   cardIllustration: {fileID: 8877784121974877957}
+  cardBack: {fileID: 7732751701297329903}
   titleTMP: {fileID: 5838064973637829469}
   descriptionTMP: {fileID: 5702750450438910117}
 --- !u!1 &6939288971418544971
