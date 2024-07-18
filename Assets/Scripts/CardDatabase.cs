@@ -32,4 +32,17 @@ public class CardDatabase : MonoBehaviour
             }
         }
     }
+
+    private void ShuffleDeck()
+    {
+        for(int i = 0; i < deck.Count; i++)
+        {
+            int randomCardIdx = Random.Range(i, deck.Count);
+            CardSO randomCard = deck[randomCardIdx];
+
+            deck[randomCardIdx] = deck[i];
+
+            deck[i] = randomCard;
+        }
+    }
 }
