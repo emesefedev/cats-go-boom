@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 254443894}
   - component: {fileID: 254443896}
   m_Layer: 5
-  m_Name: Draw Deck Panel
+  m_Name: Draw Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1560,6 +1560,7 @@ GameObject:
   - component: {fileID: 1941899766}
   - component: {fileID: 1941899765}
   - component: {fileID: 1941899768}
+  - component: {fileID: 1941899769}
   m_Layer: 5
   m_Name: Player Hand Panel
   m_TagString: Untagged
@@ -1664,6 +1665,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hand: []
   cardPrefab: {fileID: 5264702735833813640, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+--- !u!114 &1941899769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1941899763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a3219cf3fc34626ad9208928be776e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2053839771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,6 +1688,8 @@ GameObject:
   - component: {fileID: 2053839772}
   - component: {fileID: 2053839774}
   - component: {fileID: 2053839773}
+  - component: {fileID: 2053839775}
+  - component: {fileID: 2053839776}
   m_Layer: 5
   m_Name: Discard Deck Panel
   m_TagString: Untagged
@@ -1739,6 +1754,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053839771}
   m_CullTransparentMesh: 1
+--- !u!114 &2053839775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053839771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a3219cf3fc34626ad9208928be776e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2053839776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053839771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: -190
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

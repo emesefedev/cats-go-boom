@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: NopeCard
   m_EditorClassIdentifier: 
   description: Stop the action of another player.
-  cardType: 4
+  cardType: 5
+  cardSubType: 0

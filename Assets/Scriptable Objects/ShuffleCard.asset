@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: ShuffleCard
   m_EditorClassIdentifier: 
   description: Shuffle the draw pile.
-  cardType: 6
+  cardType: 7
+  cardSubType: 0

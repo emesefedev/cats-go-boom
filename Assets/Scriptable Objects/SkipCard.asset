@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SkipCard
   m_EditorClassIdentifier: 
   description: End your turn without drawing a card.
-  cardType: 7
+  cardType: 8
+  cardSubType: 0

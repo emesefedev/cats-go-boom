@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SeeFutureCard
   m_EditorClassIdentifier: 
   description: View the top three cards of the deck.
-  cardType: 5
+  cardType: 6
+  cardSubType: 0

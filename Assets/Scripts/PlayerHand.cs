@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
@@ -30,6 +31,8 @@ public class PlayerHand : MonoBehaviour
         {
             PlayerDrawCard();
         }
+
+        PlayerDrawDefuseCard();
     }
 
     private void UpdatePlayerDeckUI(CardSO cardSO)
@@ -42,6 +45,13 @@ public class PlayerHand : MonoBehaviour
     public void PlayerDrawCard()
     {
         CardSO card = CardDatabase.Instance.DrawCard();
+        hand.Add(card);
+        UpdatePlayerDeckUI(card);
+    }
+
+    private void PlayerDrawDefuseCard()
+    {
+        CardSO card = CardDatabase.Instance.DrawDefuseCard();
         hand.Add(card);
         UpdatePlayerDeckUI(card);
     }

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: FavorCard
   m_EditorClassIdentifier: 
   description: Another player must give you a card of their choice.
-  cardType: 3
+  cardType: 4
+  cardSubType: 0
