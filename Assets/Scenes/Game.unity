@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 536898639}
   - component: {fileID: 536898638}
   m_Layer: 5
-  m_Name: Enemy Hand Panel
+  m_Name: Player2 Hand Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,6 +1497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1841036818}
   - component: {fileID: 1841036819}
+  - component: {fileID: 1841036820}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1547,6 +1548,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cb9b541eb0dc6404597303218bfc5359, type: 2}
   drawDeck: []
   discardDeck: []
+--- !u!114 &1841036820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841036816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b6a8cdd00dd46a5b4b93ed65f114bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1941899763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,7 +1575,7 @@ GameObject:
   - component: {fileID: 1941899768}
   - component: {fileID: 1941899769}
   m_Layer: 5
-  m_Name: Player Hand Panel
+  m_Name: Player1 Hand Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1692,7 +1705,7 @@ GameObject:
   - component: {fileID: 2053839776}
   m_Layer: 5
   m_Name: Discard Deck Panel
-  m_TagString: Untagged
+  m_TagString: Discard Deck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
