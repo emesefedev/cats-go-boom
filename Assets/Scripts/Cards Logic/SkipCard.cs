@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SkipCard : CardLogic
 {
     public override void PlayCard()

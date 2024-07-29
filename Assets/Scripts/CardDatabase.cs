@@ -7,10 +7,10 @@ public class CardDatabase : MonoBehaviour
 {
     public static CardDatabase Instance { get; private set;}
 
-    [SerializeField] private CardSO[] cardsSO;
+    [SerializeField] private GameObject[] cardPrefabs;
 
     /// <summary>
-    /// This array needs to have as many elements as the CardSO array
+    /// This array needs to have as many elements as the cardPrefabs array
     /// </summary>
     private int[] totalCardsPerType = new int[]{
         4,   // Attack
@@ -30,8 +30,8 @@ public class CardDatabase : MonoBehaviour
     private int totalDefuseCardsDrawn;
 
 
-    [SerializeField] private List<CardSO> drawDeck = new List<CardSO>();
-    [SerializeField] private List<CardSO> discardDeck = new List<CardSO>();
+    [SerializeField] private List<GameObject> drawDeck = new List<GameObject>();
+    [SerializeField] private List<GameObject> discardDeck = new List<GameObject>();
 
     private void Awake()
     {
@@ -47,13 +47,17 @@ public class CardDatabase : MonoBehaviour
 
     private void InitializeDrawDeck()
     {
-        for (int i = 0; i < cardsSO.Length; i++)
+        for (int i = 0; i < cardPrefabs.Length; i++)
         {
-            if (cardsSO[i].cardType == CardType.Boom || cardsSO[i].cardType == CardType.Defuse) continue;
+            CardUI cardUI = cardPrefabs[i].GetComponent<CardUI>();
+            if (cardUI.GetCardType() == CardType.Boom || cardUI.GetCardType() == CardType.Defuse) 
+            {
+                continue;
+            }
 
             for (int j = 0; j < totalCardsPerType[i]; j++)
             {
-                drawDeck.Add(cardsSO[i]);
+                drawDeck.Add(cardPrefabs[i]);
             }
         }
     }
@@ -63,7 +67,7 @@ public class CardDatabase : MonoBehaviour
         for(int i = 0; i < drawDeck.Count; i++)
         {
             int randomCardIdx = Random.Range(i, drawDeck.Count);
-            CardSO randomCard = drawDeck[randomCardIdx];
+            GameObject randomCard = drawDeck[randomCardIdx];
 
             drawDeck[randomCardIdx] = drawDeck[i];
 
@@ -71,9 +75,9 @@ public class CardDatabase : MonoBehaviour
         }
     }
 
-    public CardSO DrawCard()
+    public GameObject DrawCard()
     {
-        CardSO card = drawDeck[0];
+        GameObject card = drawDeck[0];
         drawDeck.RemoveAt(0);
 
         DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
@@ -81,23 +85,23 @@ public class CardDatabase : MonoBehaviour
         return card;
     }
 
-    public CardSO DrawDefuseCard()
+    public GameObject DrawDefuseCard()
     {
         // TODO: Get CardSO with type Defuse
         totalDefuseCardsDrawn ++;
-        return cardsSO[7];
+        return cardPrefabs[7];
     }
 
     public void CompleteDrawDeck()
     {
         // TODO: Get CardSO with type Boom
-        drawDeck.Add(cardsSO[2]); // Boom
+        drawDeck.Add(cardPrefabs[2]); // Boom
 
         // TODO: Get CardSO with type Defuse
         int totalDefuseCardsLeft = totalCardsPerType[7] - totalDefuseCardsDrawn;
         for (int j = 0; j < totalDefuseCardsLeft; j++)
         {
-            drawDeck.Add(cardsSO[7]);
+            drawDeck.Add(cardPrefabs[7]);
         }
 
         DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);

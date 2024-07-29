@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour
 {
+    [SerializeField] private CardSO cardSO;
+
     [SerializeField] private Image cardBorder;
     [SerializeField] private Image cardIllustration;
     
@@ -45,17 +47,24 @@ public class CardUI : MonoBehaviour
         }
     }
 
-    public void SetCard(CardSO cardSO)
+    public CardType GetCardType() {
+        return cardSO.cardType;
+    }
+
+    public void SetCard()
     {
+        Debug.Log("ho");
+
         typeIndex = (int)cardSO.cardType;
         cardColor = Colors.cardColors[typeIndex];
 
         cardBorder.color = cardColor;
         cardIllustration.color = cardColor;
 
-        titleTMP.text = cardSO.cardType == CardType.Cat 
+        titleTMP.text = GetCardType() == CardType.Cat 
         ? cardSO.cardSubType.ToString()
         : cardTitles[typeIndex];
+        
         descriptionTMP.text = cardSO.description;
     }
 

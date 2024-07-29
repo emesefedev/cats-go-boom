@@ -6,7 +6,7 @@ public class PlayerHand : MonoBehaviour
 {
     public static PlayerHand Instance { get; private set;}
 
-    [SerializeField] private List<CardSO> hand = new List<CardSO>();
+    [SerializeField] private List<GameObject> hand = new List<GameObject>();
 
     [SerializeField] private Transform cardPrefab;
 
@@ -35,23 +35,23 @@ public class PlayerHand : MonoBehaviour
         PlayerDrawDefuseCard();
     }
 
-    private void UpdatePlayerDeckUI(CardSO cardSO)
+    private void UpdatePlayerDeckUI(GameObject card)
     {
-        Transform card = Instantiate(cardPrefab, transform);
+        Transform cardTransform = Instantiate(card.transform, transform);
         CardUI cardUI = card.GetComponent<CardUI>();
-        cardUI.SetCard(cardSO);
+        cardUI.SetCard();
     }   
 
     public void PlayerDrawCard()
     {
-        CardSO card = CardDatabase.Instance.DrawCard();
+        GameObject card = CardDatabase.Instance.DrawCard();
         hand.Add(card);
         UpdatePlayerDeckUI(card);
     }
 
     private void PlayerDrawDefuseCard()
     {
-        CardSO card = CardDatabase.Instance.DrawDefuseCard();
+        GameObject card = CardDatabase.Instance.DrawDefuseCard();
         hand.Add(card);
         UpdatePlayerDeckUI(card);
     }

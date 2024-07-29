@@ -1532,20 +1532,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ac2a6a2e77948a7bbe37ef9c4389c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardsSO:
-  - {fileID: 11400000, guid: dd77d2b0f2d4343d38e81f6cabf15afb, type: 2}
-  - {fileID: 11400000, guid: 2e05d7f0f7a02449880fdc8d9d235e8b, type: 2}
-  - {fileID: 11400000, guid: c2963d920dba841999956e111c032343, type: 2}
-  - {fileID: 11400000, guid: 8ef496d490ecc458d9b65734ae0fc617, type: 2}
-  - {fileID: 11400000, guid: 98a73616035b54a40be2cea38d91f422, type: 2}
-  - {fileID: 11400000, guid: e4ce8909a71ee41edabe2d7131cd29cf, type: 2}
-  - {fileID: 11400000, guid: 4621f5b14e69245089c08027c830d879, type: 2}
-  - {fileID: 11400000, guid: 00a6b833e87d049a583b8500daa42c2f, type: 2}
-  - {fileID: 11400000, guid: c56d3f6678fcb4c27a8ba64db98e35e5, type: 2}
-  - {fileID: 11400000, guid: 6567e92446bab4ce1824a68807a823c7, type: 2}
-  - {fileID: 11400000, guid: 9a1c36394f74745ba8b6ed9eb4214e60, type: 2}
-  - {fileID: 11400000, guid: a51985733545649a093e8dc77732252b, type: 2}
-  - {fileID: 11400000, guid: cb9b541eb0dc6404597303218bfc5359, type: 2}
+  cardPrefabs:
+  - {fileID: 231769357530327931, guid: 760f84bd82852412487debe6ce34ec70, type: 3}
+  - {fileID: 744083828356427442, guid: 4844cd649b1144bbe8cc25aaf778cbc2, type: 3}
+  - {fileID: 7931280896319734349, guid: c1e09c0cb62b64e829862ac81b61248d, type: 3}
+  - {fileID: 8728984411343018755, guid: 623f7790cf1a541a0b85c11c82628542, type: 3}
+  - {fileID: 8440754036471287414, guid: 92ea2f5b9cd9b43b5b0920c92ee5d475, type: 3}
+  - {fileID: 8035383142048253098, guid: e998ecba9331849958a48f31142e9e11, type: 3}
+  - {fileID: 8711300593876952475, guid: 527b9cce5c2a24977b99721fd1f140c1, type: 3}
+  - {fileID: 4500027354026275898, guid: 6839b5fbb39804aea976c4dd837c3840, type: 3}
+  - {fileID: 5293458365915203369, guid: 8de2a3662d62249f59bf3b5739aa5844, type: 3}
+  - {fileID: 1286425606783929709, guid: 243be0d4a63c845dfb7760e5e08f2b99, type: 3}
+  - {fileID: 3566178496595651813, guid: b027faf165d28491088cfd632d67d5d1, type: 3}
+  - {fileID: 7782010086486119035, guid: d92348336ae1b4a9983ca80c5bf28485, type: 3}
+  - {fileID: 498069343828763493, guid: b9b1db45f87d2473ab96f736a970b7ac, type: 3}
   drawDeck: []
   discardDeck: []
 --- !u!114 &1841036820
