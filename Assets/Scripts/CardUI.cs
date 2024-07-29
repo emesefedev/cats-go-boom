@@ -53,8 +53,6 @@ public class CardUI : MonoBehaviour
 
     public void SetCard()
     {
-        Debug.Log("ho");
-
         typeIndex = (int)cardSO.cardType;
         cardColor = Colors.cardColors[typeIndex];
 

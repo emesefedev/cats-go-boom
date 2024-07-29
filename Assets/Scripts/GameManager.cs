@@ -9,7 +9,7 @@ public enum Turn {
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
-    public static event Action OnTurnChange;
+    public static event Action<Turn> OnTurnChange;
 
     private Turn currentTurn;
 
@@ -34,6 +34,6 @@ public class GameManager : MonoBehaviour
         ? Turn.Player2
         : Turn.Player1;
 
-        OnTurnChange?.Invoke();
+        OnTurnChange?.Invoke(currentTurn);
     }
 }

@@ -24,8 +24,29 @@ public class DrawDeckUI : MonoBehaviour
         drawButton.onClick.AddListener(PlayerHand.Instance.PlayerDrawCard);
     }
 
+    private void OnEnable() 
+    {
+        GameManager.OnTurnChange += GameManager_OnTurnChange;
+    }
+
+    private void OnDisable() 
+    {
+        GameManager.OnTurnChange -= GameManager_OnTurnChange;
+    }
+
+    private void GameManager_OnTurnChange(Turn currentTurn) 
+    {
+        EnableOrDisableDrawButtonInteractable(currentTurn);
+    }
+
     public void UpdateCardsInDrawDeckText(int totalCards)
     {
         cardsInDrawDeckText.text = totalCards.ToString();
+    }
+
+    private void EnableOrDisableDrawButtonInteractable(Turn currentTurn) 
+    {
+        bool interactable = currentTurn == Turn.Player1;
+        drawButton.interactable = interactable;
     }
 }

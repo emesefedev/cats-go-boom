@@ -9,7 +9,7 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
     {
         if (gameObject.CompareTag(DISCARD_DECK_TAG))
         {
-            CardLogic cardLogic = gameObject.GetComponent<CardLogic>();
+            CardLogic cardLogic = eventData.pointerDrag.GetComponent<CardLogic>();
             if (cardLogic != null) 
             {
                 cardLogic.PlayCard();
