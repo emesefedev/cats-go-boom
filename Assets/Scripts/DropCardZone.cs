@@ -13,6 +13,7 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
             if (cardLogic != null) 
             {
                 cardLogic.PlayCard();
+                DiscardDeckUI.Instance.DisableFirstVisibleChild();
             }
         }
     }

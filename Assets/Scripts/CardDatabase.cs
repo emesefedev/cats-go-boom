@@ -62,7 +62,7 @@ public class CardDatabase : MonoBehaviour
         }
     }
 
-    private void ShuffleDeck()
+    public void ShuffleDeck()
     {
         for(int i = 0; i < drawDeck.Count; i++)
         {
@@ -77,12 +77,17 @@ public class CardDatabase : MonoBehaviour
 
     public GameObject DrawCard()
     {
-        GameObject card = drawDeck[0];
-        drawDeck.RemoveAt(0);
+        if (drawDeck.Count > 0)
+        {
+            GameObject card = drawDeck[0];
+            drawDeck.RemoveAt(0);
 
-        DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
+            DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
 
-        return card;
+            return card;
+        }
+
+        return null;   
     }
 
     public GameObject DrawDefuseCard()

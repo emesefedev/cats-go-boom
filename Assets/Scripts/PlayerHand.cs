@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
@@ -37,7 +36,7 @@ public class PlayerHand : MonoBehaviour
 
     private void UpdatePlayerDeckUI(GameObject card)
     {
-        Transform cardTransform = Instantiate(card.transform, transform);
+        Instantiate(card.transform, transform);
         CardUI cardUI = card.GetComponent<CardUI>();
         cardUI.SetCard();
     }   
@@ -45,8 +44,11 @@ public class PlayerHand : MonoBehaviour
     public void PlayerDrawCard()
     {
         GameObject card = CardDatabase.Instance.DrawCard();
-        hand.Add(card);
-        UpdatePlayerDeckUI(card);
+        if (card != null)
+        {
+            hand.Add(card);
+            UpdatePlayerDeckUI(card);
+        }
     }
 
     private void PlayerDrawDefuseCard()
