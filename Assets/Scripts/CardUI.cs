@@ -34,19 +34,6 @@ public class CardUI : MonoBehaviour
         "Skip"             // Skip
     };
 
-    private void Awake()
-    {
-        FaceDownCard(isFaceDown);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F)){
-            FaceDownCard(isFaceDown);
-            isFaceDown = !isFaceDown;
-        }
-    }
-
     public CardType GetCardType() {
         return cardSO.cardType;
     }
@@ -68,8 +55,7 @@ public class CardUI : MonoBehaviour
 
     public void FaceDownCard(bool isFaceDown)
     {
-        this.isFaceDown = isFaceDown;
-        Debug.Log($"is face down {isFaceDown}");
         cardBack.SetActive(isFaceDown);
+        this.isFaceDown = isFaceDown;
     }
 }
