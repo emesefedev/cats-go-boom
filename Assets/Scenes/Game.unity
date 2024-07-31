@@ -214,6 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardsInDrawDeckText: {fileID: 1626634006}
   drawButton: {fileID: 538771707}
+  player1: {fileID: 1941899768}
 --- !u!1001 &426568806
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -465,6 +466,7 @@ GameObject:
   - component: {fileID: 536898640}
   - component: {fileID: 536898639}
   - component: {fileID: 536898638}
+  - component: {fileID: 536898641}
   m_Layer: 5
   m_Name: Player2 Hand Panel
   m_TagString: Untagged
@@ -555,6 +557,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536898635}
   m_CullTransparentMesh: 1
+--- !u!114 &536898641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536898635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8448145c107d47fc950f23efc834516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: []
+  playable: 0
 --- !u!1 &538771705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,6 +1576,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b6a8cdd00dd46a5b4b93ed65f114bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players:
+  - {fileID: 1941899768}
+  - {fileID: 536898641}
 --- !u!1 &1941899763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1677,7 +1696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: []
-  cardPrefab: {fileID: 5264702735833813640, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+  playable: 1
 --- !u!114 &1941899769
 MonoBehaviour:
   m_ObjectHideFlags: 0

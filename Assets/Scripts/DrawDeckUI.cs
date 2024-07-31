@@ -10,6 +10,8 @@ public class DrawDeckUI : MonoBehaviour
 
     [SerializeField] private Button drawButton;
 
+    [SerializeField] private PlayerHand player1;
+
     private void Awake()
     {
         if (Instance != null)
@@ -21,7 +23,10 @@ public class DrawDeckUI : MonoBehaviour
 
     private void Start()
     {
-        drawButton.onClick.AddListener(PlayerHand.Instance.PlayerDrawCard);
+        drawButton.onClick.AddListener(() => {
+                player1.PlayerDrawCard();
+                GameManager.Instance.ChangeTurn();
+            });
     }
 
     private void OnEnable() 

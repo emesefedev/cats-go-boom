@@ -96,6 +96,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5702750450438910117, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_text
+      value: Play two matching cat cards to steal a random card from another player.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5838064973637829469, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_text
+      value: EarthCat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8601668450328712727, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8601668450328712727, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8601668450328712727, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877784121974877957, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877784121974877957, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.941
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877784121974877957, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.941
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

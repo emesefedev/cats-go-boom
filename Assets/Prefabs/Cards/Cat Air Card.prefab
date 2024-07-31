@@ -104,6 +104,10 @@ PrefabInstance:
       propertyPath: m_text
       value: AirCat
       objectReference: {fileID: 0}
+    - target: {fileID: 7732751701297329903, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8601668450328712727, guid: 9ae9c21e6a8004381b003ca6ce6b4f4b, type: 3}
       propertyPath: m_Color.b
       value: 0.941

@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set;}
     public static event Action<Turn> OnTurnChange;
 
+    public PlayerHand[] players;
+
     private Turn currentTurn;
 
     private void Awake()
@@ -26,6 +28,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         currentTurn = Turn.Player1;
+
+        foreach (PlayerHand player in players)
+        {
+            player.InitializePlayerDeck();
+        }
+
+        CardDatabase.Instance.CompleteDrawDeck();
     }
 
     public void ChangeTurn()

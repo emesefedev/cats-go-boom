@@ -3,28 +3,10 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    public static PlayerHand Instance { get; private set;}
-
     [SerializeField] private List<GameObject> hand = new List<GameObject>();
+    [SerializeField] bool playable;
 
-    [SerializeField] private Transform cardPrefab;
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("More than one instance");
-        }
-        Instance = this;
-    }
-
-    private void Start()
-    {
-        InitializePlayerDeck();
-        CardDatabase.Instance.CompleteDrawDeck();
-    }
-
-    private void InitializePlayerDeck()
+    public void InitializePlayerDeck()
     {
         for(int i = 0; i < 7; i++)
         {
@@ -32,14 +14,7 @@ public class PlayerHand : MonoBehaviour
         }
 
         PlayerDrawDefuseCard();
-    }
-
-    private void UpdatePlayerDeckUI(GameObject card)
-    {
-        Instantiate(card.transform, transform);
-        CardUI cardUI = card.GetComponent<CardUI>();
-        cardUI.SetCard();
-    }   
+    } 
 
     public void PlayerDrawCard()
     {
@@ -57,4 +32,12 @@ public class PlayerHand : MonoBehaviour
         hand.Add(card);
         UpdatePlayerDeckUI(card);
     }
+
+    private void UpdatePlayerDeckUI(GameObject card)
+    {
+        Instantiate(card.transform, transform);
+        CardUI cardUI = card.GetComponent<CardUI>();
+        cardUI.SetCard();
+        cardUI.FaceDownCard(!playable);
+    }  
 }

@@ -66,9 +66,10 @@ public class CardUI : MonoBehaviour
         descriptionTMP.text = cardSO.description;
     }
 
-    private void FaceDownCard(bool isFaceDown)
+    public void FaceDownCard(bool isFaceDown)
     {
         this.isFaceDown = isFaceDown;
+        Debug.Log($"is face down {isFaceDown}");
         cardBack.SetActive(isFaceDown);
     }
 }
