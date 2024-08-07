@@ -62,6 +62,11 @@ public class CardDatabase : MonoBehaviour
         }
     }
 
+    public void UpdateDiscardDeck(GameObject card)
+    {
+        discardDeck.Add(card);
+    }
+
     public void ShuffleDeck()
     {
         for(int i = 0; i < drawDeck.Count; i++)

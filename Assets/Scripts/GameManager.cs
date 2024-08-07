@@ -27,6 +27,19 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        StartGame();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            players[0].PlayTurnAutomatically();
+        }
+    }
+
+    private void StartGame()
+    {
         currentTurn = Turn.Player1;
 
         foreach (PlayerHand player in players)

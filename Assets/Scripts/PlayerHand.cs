@@ -49,4 +49,51 @@ public class PlayerHand : MonoBehaviour
         cardUI.SetCard();
         cardUI.FaceDownCard(!playable);
     }  
+
+    public void PlayerPlayCard(GameObject card, int childIndex)
+    {
+        CardLogic cardLogic = card.GetComponent<CardLogic>();
+        cardLogic.PlayCard();
+        
+        hand.RemoveAt(childIndex);
+    }
+
+    public void PlayTurnAutomatically()
+    {
+        // We declare the needed variables
+        bool playCard = true;
+        int randomCardIndex;
+        GameObject card = null;
+        CardUI cardUI = null;
+        CardType cardType = CardType.Boom;
+
+        // We can play a card or not. Finally draw and change turn
+        do 
+        {
+            randomCardIndex =  Random.Range(-1, hand.Count);
+
+            if (randomCardIndex == -1)
+            {
+                playCard = false;
+                break;
+            }
+
+            card = hand[randomCardIndex];
+            cardUI = card.GetComponent<CardUI>();
+            cardType = cardUI.GetCardType();
+        }
+        while (cardType == CardType.Defuse || 
+               cardType == CardType.Nope || 
+               cardType == CardType.Boom);
+
+        if (playCard)
+        {
+            hand.Remove(card);
+            GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
+            DiscardDeckUI.Instance.AddCardToDiscardDeck(cardInstance);
+        }   
+
+        PlayerDrawCard();
+        GameManager.Instance.ChangeTurn();
+    }
 }

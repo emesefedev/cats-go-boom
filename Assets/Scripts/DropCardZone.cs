@@ -9,11 +9,16 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
     {
         if (gameObject.CompareTag(DISCARD_DECK_TAG))
         {
-            CardLogic cardLogic = eventData.pointerDrag.GetComponent<CardLogic>();
-            if (cardLogic != null) 
+            GameObject card = eventData.pointerDrag;
+            if (card != null) 
             {
-                cardLogic.PlayCard();
-                DiscardDeckUI.Instance.DisableFirstVisibleChild();
+                DragCard dragCard = card.GetComponent<DragCard>();
+                Transform player = dragCard.GetOriginalParent();
+                int childIndex = dragCard.GetChildIndex();
+                
+                player.GetComponent<PlayerHand>().PlayerPlayCard(card, childIndex);
+
+                DiscardDeckUI.Instance.AddCardToDiscardDeck(card);
             }
         }
     }
