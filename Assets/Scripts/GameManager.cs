@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set;}
     public static event Action<Turn> OnTurnChange;
 
+    // The game is intended for two players, but more players may be added in the future
     public PlayerHand[] players;
 
     private Turn currentTurn;
@@ -30,14 +31,16 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    private void Update()
+    private void OnEnable() 
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            players[0].PlayTurnAutomatically();
-        }
+        OnTurnChange += NonPlayablePlayerPlaysTurn;
     }
 
+    private void OnDisable() 
+    {
+        OnTurnChange -= NonPlayablePlayerPlaysTurn;
+    }
+    
     private void StartGame()
     {
         currentTurn = Turn.Player1;
@@ -57,5 +60,14 @@ public class GameManager : MonoBehaviour
         : Turn.Player1;
 
         OnTurnChange?.Invoke(currentTurn);
+    }
+
+    private void NonPlayablePlayerPlaysTurn(Turn currentTurn) 
+    {
+        bool nonPlayablePlayer = currentTurn != Turn.Player1;
+        if (nonPlayablePlayer) 
+        {
+            players[1].PlayTurnAutomatically();
+        }
     }
 }

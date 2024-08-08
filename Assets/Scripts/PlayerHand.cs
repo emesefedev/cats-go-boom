@@ -74,6 +74,7 @@ public class PlayerHand : MonoBehaviour
 
             if (randomCardIndex == -1)
             {
+                Debug.Log("Doesn't play any card");
                 playCard = false;
                 break;
             }
@@ -88,8 +89,13 @@ public class PlayerHand : MonoBehaviour
 
         if (playCard)
         {
+            Debug.Log($"Plays card {cardType}");
             hand.Remove(card);
+
             GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
+            cardUI = cardInstance.GetComponent<CardUI>();
+            cardUI.FaceDownCard(false);
+            
             DiscardDeckUI.Instance.AddCardToDiscardDeck(cardInstance);
         }   
 

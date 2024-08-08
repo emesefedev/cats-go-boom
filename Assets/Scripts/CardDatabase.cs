@@ -27,8 +27,8 @@ public class CardDatabase : MonoBehaviour
         4,   // Shuffle
         4    // Skip
     };
-    private int totalDefuseCardsDrawn;
 
+    private int totalDefuseCardsDrawn;
 
     [SerializeField] private List<GameObject> drawDeck = new List<GameObject>();
     [SerializeField] private List<GameObject> discardDeck = new List<GameObject>();
@@ -104,17 +104,33 @@ public class CardDatabase : MonoBehaviour
 
     public void CompleteDrawDeck()
     {
-        // TODO: Get CardSO with type Boom
-        drawDeck.Add(cardPrefabs[2]); // Boom
+        int boomCardIndex = GetCardIndexGivenType(CardType.Boom);
+        drawDeck.Add(cardPrefabs[boomCardIndex]); 
 
-        // TODO: Get CardSO with type Defuse
-        int totalDefuseCardsLeft = totalCardsPerType[7] - totalDefuseCardsDrawn;
+        int defuseCardIndex = GetCardIndexGivenType(CardType.Defuse);
+        int totalDefuseCardsLeft = totalCardsPerType[defuseCardIndex] - totalDefuseCardsDrawn;
         for (int j = 0; j < totalDefuseCardsLeft; j++)
         {
-            drawDeck.Add(cardPrefabs[7]);
+            drawDeck.Add(cardPrefabs[defuseCardIndex]);
         }
 
         DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
         ShuffleDeck();
+    }
+
+    private int GetCardIndexGivenType(CardType cardType)
+    {
+        for (int i = 0; i < cardPrefabs.Length; i++)
+        {
+            CardUI cardUI = cardPrefabs[i].GetComponent<CardUI>();
+            CardType type = cardUI.GetCardType();
+            if (type == cardType)
+            {
+                return i;
+            }
+        }
+
+        Debug.LogError("The card type passed by parameter does not exist");
+        return -1;
     }
 }
