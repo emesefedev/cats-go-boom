@@ -3,7 +3,8 @@ using UnityEngine;
 
 public enum Turn {
     Player1,
-    Player2
+    Player2,
+    Player3,
 }
 
 public class GameManager : MonoBehaviour
