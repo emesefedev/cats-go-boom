@@ -26,7 +26,7 @@ public class PlayerHand : MonoBehaviour
         if (card != null)
         {
             hand.Add(card);
-            UpdatePlayerDeckUI(card);
+            UpdatePlayerDeckUIWithNewCard(card);
         }
     }
 
@@ -50,12 +50,32 @@ public class PlayerHand : MonoBehaviour
         AddCardToPlayerHand(card);
     }
 
-    private void UpdatePlayerDeckUI(GameObject card)
+    private void UpdatePlayerDeckUIWithNewCard(GameObject card)
     {
         Transform cardInstance = Instantiate(card.transform, transform);
+        
         CardUI cardUI = cardInstance.GetComponent<CardUI>();
         cardUI.SetCard();
         cardUI.FaceDownCard(!playable);
+    }  
+
+    public void UpdatePlayerDeckUI()
+    {
+        if (transform.childCount != hand.Count)
+        {
+            Debug.LogError("Card instances do not match the cards in the player's hand");
+        }
+
+        for (int i = 0; i < hand.Count; i++)
+        {
+            Transform cardInstance = transform.GetChild(i);
+            CardUI cardUI = cardInstance.GetComponent<CardUI>();
+
+            GameObject card = hand[i];
+            CardType cardType = card.GetComponent<CardUI>().GetCardType();
+
+            cardUI.SetCard();
+        }
     }  
 
     public void PlayerPlayCard(GameObject card, int childIndex)
