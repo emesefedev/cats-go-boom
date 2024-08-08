@@ -33,6 +33,14 @@ public class PlayerHand : MonoBehaviour
     public void PlayerDrawCard()
     {
         GameObject card = CardDatabase.Instance.DrawCard();
+        CardType cardType = card.GetComponent<CardUI>().GetCardType();
+
+        if (cardType == CardType.Boom)
+        {
+            Debug.Log($"{gameObject.name} GAME OVER");
+        }
+
+
         AddCardToPlayerHand(card);
     }
 
@@ -64,7 +72,6 @@ public class PlayerHand : MonoBehaviour
         bool playCard = true;
         int randomCardIndex;
         GameObject card = null;
-        CardUI cardUI = null;
         CardType cardType = CardType.Boom;
 
         // We can play a card or not. Finally draw and change turn
@@ -80,8 +87,7 @@ public class PlayerHand : MonoBehaviour
             }
 
             card = hand[randomCardIndex];
-            cardUI = card.GetComponent<CardUI>();
-            cardType = cardUI.GetCardType();
+            cardType = card.GetComponent<CardUI>().GetCardType();
         }
         while (cardType == CardType.Defuse || 
                cardType == CardType.Nope || 
@@ -93,7 +99,7 @@ public class PlayerHand : MonoBehaviour
             hand.Remove(card);
 
             GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
-            cardUI = cardInstance.GetComponent<CardUI>();
+            CardUI cardUI = cardInstance.GetComponent<CardUI>();
             cardUI.FaceDownCard(false);
             
             DiscardDeckUI.Instance.AddCardToDiscardDeck(cardInstance);
