@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> hand = new List<GameObject>();
-    [SerializeField] bool playable;
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private bool playable;
+    [SerializeField] private List<CardSO> hand = new List<CardSO>();
+    
 
     public bool IsPlayable()
     {
@@ -21,7 +23,7 @@ public class PlayerHand : MonoBehaviour
         PlayerDrawDefuseCard();
     } 
 
-    private void AddCardToPlayerHand(GameObject card) 
+    private void AddCardToPlayerHand(CardSO card) 
     {
         if (card != null)
         {
@@ -32,8 +34,8 @@ public class PlayerHand : MonoBehaviour
 
     public void PlayerDrawCard()
     {
-        GameObject card = CardDatabase.Instance.DrawCard();
-        CardType cardType = card.GetComponent<CardUI>().GetCardType();
+        CardSO cardSO = CardDatabase.Instance.DrawCard();
+        CardType cardType = cardSO.cardType;
 
         if (cardType == CardType.Boom)
         {
@@ -41,21 +43,21 @@ public class PlayerHand : MonoBehaviour
         }
 
 
-        AddCardToPlayerHand(card);
+        AddCardToPlayerHand(cardSO);
     }
 
     private void PlayerDrawDefuseCard()
     {
-        GameObject card = CardDatabase.Instance.DrawDefuseCard();
+        CardSO card = CardDatabase.Instance.DrawDefuseCard();
         AddCardToPlayerHand(card);
     }
 
-    private void UpdatePlayerDeckUIWithNewCard(GameObject card)
+    private void UpdatePlayerDeckUIWithNewCard(CardSO cardSO)
     {
-        Transform cardInstance = Instantiate(card.transform, transform);
+        Transform cardInstance = Instantiate(cardPrefab.transform, transform);
         
         CardUI cardUI = cardInstance.GetComponent<CardUI>();
-        cardUI.SetCard();
+        cardUI.SetCard(cardSO);
         cardUI.FaceDownCard(!playable);
     }  
 
@@ -71,10 +73,9 @@ public class PlayerHand : MonoBehaviour
             Transform cardInstance = transform.GetChild(i);
             CardUI cardUI = cardInstance.GetComponent<CardUI>();
 
-            GameObject card = hand[i];
-            CardType cardType = card.GetComponent<CardUI>().GetCardType();
+            CardSO cardSO = hand[i];
 
-            cardUI.SetCard();
+            cardUI.SetCard(cardSO);
         }
     }  
 
@@ -91,7 +92,6 @@ public class PlayerHand : MonoBehaviour
         // We declare the needed variables
         bool playCard = true;
         int randomCardIndex;
-        GameObject card = null;
         CardType cardType = CardType.Boom;
 
         // We can play a card or not. Finally draw and change turn
@@ -106,8 +106,7 @@ public class PlayerHand : MonoBehaviour
                 break;
             }
 
-            card = hand[randomCardIndex];
-            cardType = card.GetComponent<CardUI>().GetCardType();
+            cardType = hand[randomCardIndex].cardType;
         }
         while (cardType == CardType.Defuse || 
                cardType == CardType.Nope || 
@@ -116,7 +115,7 @@ public class PlayerHand : MonoBehaviour
         if (playCard)
         {
             Debug.Log($"Plays card {cardType}");
-            hand.Remove(card);
+            hand.RemoveAt(randomCardIndex);
 
             GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
             CardUI cardUI = cardInstance.GetComponent<CardUI>();

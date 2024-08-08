@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour
 {
-    [SerializeField] private CardSO cardSO;
+    private CardSO cardSO;
 
     [SerializeField] private Image cardBorder;
     [SerializeField] private Image cardIllustration;
@@ -35,11 +35,17 @@ public class CardUI : MonoBehaviour
     };
 
     public CardType GetCardType() {
+        if (cardSO == null)
+        {
+            Debug.LogError("No cardSO set");
+        }
         return cardSO.cardType;
     }
 
-    public void SetCard()
+    public void SetCard(CardSO cardSO)
     {
+        SetCardSO(cardSO);
+
         typeIndex = (int)cardSO.cardType;
         cardColor = Colors.cardColors[typeIndex];
 
@@ -57,5 +63,10 @@ public class CardUI : MonoBehaviour
     {
         cardBack.SetActive(isFaceDown);
         this.isFaceDown = isFaceDown;
+    }
+
+    private void SetCardSO(CardSO cardSO)
+    {
+        this.cardSO = cardSO;
     }
 }

@@ -7,10 +7,11 @@ public class CardDatabase : MonoBehaviour
 {
     public static CardDatabase Instance { get; private set;}
 
-    [SerializeField] private GameObject[] cardPrefabs;
+    //[SerializeField] private GameObject[] cardPrefabs;
+    [SerializeField] private CardSO[] cardsSO;
 
     /// <summary>
-    /// This array needs to have as many elements as the cardPrefabs array
+    /// This array needs to have as many elements as the cardsSO array
     /// </summary>
     private int[] totalCardsPerType = new int[]{
         4,   // Attack
@@ -30,7 +31,7 @@ public class CardDatabase : MonoBehaviour
 
     private int totalDefuseCardsDrawn;
 
-    [SerializeField] private List<GameObject> drawDeck = new List<GameObject>();
+    [SerializeField] private List<CardSO> drawDeck = new List<CardSO>();
     [SerializeField] private List<GameObject> discardDeck = new List<GameObject>();
 
     private void Awake()
@@ -47,17 +48,17 @@ public class CardDatabase : MonoBehaviour
 
     private void InitializeDrawDeck()
     {
-        for (int i = 0; i < cardPrefabs.Length; i++)
+        for (int i = 0; i < cardsSO.Length; i++)
         {
-            CardUI cardUI = cardPrefabs[i].GetComponent<CardUI>();
-            if (cardUI.GetCardType() == CardType.Boom || cardUI.GetCardType() == CardType.Defuse) 
+            CardType cardType = cardsSO[i].cardType;
+            if (cardType == CardType.Boom || cardType == CardType.Defuse) 
             {
                 continue;
             }
 
             for (int j = 0; j < totalCardsPerType[i]; j++)
             {
-                drawDeck.Add(cardPrefabs[i]);
+                drawDeck.Add(cardsSO[i]);
             }
         }
     }
@@ -72,59 +73,59 @@ public class CardDatabase : MonoBehaviour
         for(int i = 0; i < drawDeck.Count; i++)
         {
             int randomCardIdx = Random.Range(i, drawDeck.Count);
-            GameObject randomCard = drawDeck[randomCardIdx];
+            CardSO randomCardSO = drawDeck[randomCardIdx];
 
             drawDeck[randomCardIdx] = drawDeck[i];
 
-            drawDeck[i] = randomCard;
+            drawDeck[i] = randomCardSO;
         }
     }
 
-    public GameObject DrawCard()
+    public CardSO DrawCard()
     {
-        if (drawDeck.Count > 0)
+        if (drawDeck.Count <= 0)
         {
-            GameObject card = drawDeck[0];
-            drawDeck.RemoveAt(0);
-
-            DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
-
-            return card;
+            Debug.LogError("There are no more cards to draw");
         }
 
-        return null;   
+        CardSO card = drawDeck[0];
+        drawDeck.RemoveAt(0);
+
+        DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
+
+        return card;
     }
 
-    public GameObject DrawDefuseCard()
+    public CardSO DrawDefuseCard()
     {
-        // TODO: Get CardSO with type Defuse
+        int defuseCardIndex = GetCardIndexGivenType(CardType.Defuse);
         totalDefuseCardsDrawn ++;
-        return cardPrefabs[7];
+
+        return cardsSO[defuseCardIndex];
     }
 
     public void CompleteDrawDeck()
     {
         int boomCardIndex = GetCardIndexGivenType(CardType.Boom);
-        drawDeck.Add(cardPrefabs[boomCardIndex]); 
+        drawDeck.Add(cardsSO[boomCardIndex]); 
 
         int defuseCardIndex = GetCardIndexGivenType(CardType.Defuse);
         int totalDefuseCardsLeft = totalCardsPerType[defuseCardIndex] - totalDefuseCardsDrawn;
         for (int j = 0; j < totalDefuseCardsLeft; j++)
         {
-            drawDeck.Add(cardPrefabs[defuseCardIndex]);
+            drawDeck.Add(cardsSO[defuseCardIndex]);
         }
 
         DrawDeckUI.Instance.UpdateCardsInDrawDeckText(drawDeck.Count);
         ShuffleDeck();
     }
 
-    private int GetCardIndexGivenType(CardType cardType)
+    private int GetCardIndexGivenType(CardType desiredCardType)
     {
-        for (int i = 0; i < cardPrefabs.Length; i++)
+        for (int i = 0; i < cardsSO.Length; i++)
         {
-            CardUI cardUI = cardPrefabs[i].GetComponent<CardUI>();
-            CardType type = cardUI.GetCardType();
-            if (type == cardType)
+            CardType cardType = cardsSO[i].cardType;
+            if (cardType == desiredCardType)
             {
                 return i;
             }
