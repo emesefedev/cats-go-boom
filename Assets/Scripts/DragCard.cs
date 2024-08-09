@@ -27,8 +27,19 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // TODO: Si ha vuelto a la hand, reordenar la hand para que la carta movida pase a estar en último lugar, porque si no se quedan desordenadas y se depende de dicho orden
         transform.SetParent(parentToReturnTo);
+        
+        if (parentToReturnTo == originalParent)
+        {
+            PlayerHand playerHand = originalParent.GetComponent<PlayerHand>();
+            if (playerHand == null)
+            {
+                Debug.LogError("playerHand should not be null");
+            }
+
+            playerHand.UpdatePlayerDeckUI();
+        }
+
         canvasGroup.blocksRaycasts = true;
     }   
 

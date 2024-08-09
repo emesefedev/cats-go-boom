@@ -96,4 +96,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(players[1].PlayTurnAutomatically());
         }
     }
+
+    public void GameOver()
+    {
+        Debug.Log($"!!! GAME OVER !!!");
+    }
 }

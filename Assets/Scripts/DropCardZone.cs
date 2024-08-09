@@ -27,6 +27,7 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         GameObject draggedGameObject = eventData.pointerDrag;
+        
         if (draggedGameObject != null)
         {
             draggedGameObject.GetComponent<DragCard>().ChangeParent(transform);

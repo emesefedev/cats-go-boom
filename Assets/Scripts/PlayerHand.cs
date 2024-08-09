@@ -36,7 +36,7 @@ public class PlayerHand : MonoBehaviour
 
         if (cardType == CardType.Boom)
         {
-            Debug.Log($"{gameObject.name} GAME OVER");
+            GameManager.Instance.GameOver();
         }
 
 
