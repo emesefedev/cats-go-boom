@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +9,6 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private bool playable;
 
     [SerializeField] private List<CardSO> hand = new List<CardSO>();
-    
     
     public void InitializePlayerDeck()
     {
@@ -88,12 +88,12 @@ public class PlayerHand : MonoBehaviour
         hand.RemoveAt(childIndex);
     }
 
-    public void PlayTurnAutomatically()
+    public IEnumerator PlayTurnAutomatically()
     {
         // We declare the needed variables
         bool playCard = true;
         int randomCardIndex;
-        CardType cardType = CardType.Boom; // Initialization is needed and variable is not nullable
+        CardType cardType;
 
         do 
         {
@@ -112,9 +112,11 @@ public class PlayerHand : MonoBehaviour
                cardType == CardType.Nope || 
                cardType == CardType.Boom);
 
+        yield return new WaitForSeconds(1);
+
         if (playCard)
         {
-            Debug.Log($"Plays card {cardType}");
+            Debug.Log($"Plays a card");
 
             GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
             CardUI cardUI = cardInstance.GetComponent<CardUI>();
@@ -123,7 +125,7 @@ public class PlayerHand : MonoBehaviour
             PlayerPlayCard(cardInstance, randomCardIndex);
             
             DiscardDeckUI.Instance.AddCardToDiscardDeck(cardInstance);
-        }   
+        }  
 
         PlayerDrawCard();
         GameManager.Instance.ChangeTurn();

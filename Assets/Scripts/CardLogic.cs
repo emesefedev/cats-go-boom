@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 public class CardLogic : MonoBehaviour
@@ -38,6 +37,8 @@ public class CardLogic : MonoBehaviour
     private void PlayAttackCard()
     {
         Debug.Log("Attack Card played");
+        GameManager.Instance.ChangeTurn();
+        GameManager.Instance.AddExtraTurnForNextPlayer();
     }
 
     private void PlayBoomCard()

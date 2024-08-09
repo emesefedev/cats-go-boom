@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set;}
     public static event Action<Turn> OnTurnChange;
 
+    private bool extraTurn;
+
     // The game is intended for two players, but more players may be added in the future
     public PlayerHand[] players;
 
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         currentTurn = Turn.Player1;
+        Debug.Log($"{currentTurn} starts");
 
         foreach (PlayerHand player in players)
         {
@@ -53,11 +56,28 @@ public class GameManager : MonoBehaviour
         CardDatabase.Instance.CompleteDrawDeck();
     }
 
-    public void ChangeTurn()
+    public void AddExtraTurnForNextPlayer()
     {
-        currentTurn = currentTurn == Turn.Player1
-        ? Turn.Player2
-        : Turn.Player1;
+        extraTurn = true;
+    }
+
+    public void ChangeTurn()
+    { 
+        Debug.Log("Change Turn has been called");
+        if (!extraTurn)
+        {
+            currentTurn = currentTurn == Turn.Player1
+            ? Turn.Player2
+            : Turn.Player1;
+        }
+        else 
+        {
+            Debug.Log("There will be an extra turn");
+            extraTurn = false;
+        }
+        
+        
+        Debug.Log($"It's {currentTurn} turn");
 
         OnTurnChange?.Invoke(currentTurn);
     }
@@ -67,7 +87,7 @@ public class GameManager : MonoBehaviour
         bool nonPlayablePlayer = currentTurn != Turn.Player1;
         if (nonPlayablePlayer) 
         {
-            players[1].PlayTurnAutomatically();
+            StartCoroutine(players[1].PlayTurnAutomatically());
         }
     }
 }
