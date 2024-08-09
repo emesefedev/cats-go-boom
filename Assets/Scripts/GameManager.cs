@@ -61,9 +61,10 @@ public class GameManager : MonoBehaviour
         extraTurn = true;
     }
 
-    public void ChangeTurn()
+    public void ChangeTurn(bool addExtraTurnToNextPlayer = false)
     { 
         Debug.Log("Change Turn has been called");
+        
         if (!extraTurn)
         {
             currentTurn = currentTurn == Turn.Player1
@@ -72,10 +73,15 @@ public class GameManager : MonoBehaviour
         }
         else 
         {
-            Debug.Log("There will be an extra turn");
+            Debug.Log("It's the extra turn");
             extraTurn = false;
         }
         
+        if (addExtraTurnToNextPlayer)
+        {
+            AddExtraTurnForNextPlayer();
+            Debug.Log($"There will be an extra turn for {currentTurn}");
+        }
         
         Debug.Log($"It's {currentTurn} turn");
 

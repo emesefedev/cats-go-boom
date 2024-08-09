@@ -37,8 +37,7 @@ public class CardLogic : MonoBehaviour
     private void PlayAttackCard()
     {
         Debug.Log("Attack Card played");
-        GameManager.Instance.ChangeTurn();
-        GameManager.Instance.AddExtraTurnForNextPlayer();
+        GameManager.Instance.ChangeTurn(true);
     }
 
     private void PlayBoomCard()
