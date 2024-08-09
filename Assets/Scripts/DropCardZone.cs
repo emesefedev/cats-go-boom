@@ -10,6 +10,7 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
         if (gameObject.CompareTag(DISCARD_DECK_TAG))
         {
             GameObject card = eventData.pointerDrag;
+            
             if (card != null) 
             {
                 DragCard dragCard = card.GetComponent<DragCard>();

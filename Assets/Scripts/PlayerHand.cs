@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
@@ -54,9 +55,12 @@ public class PlayerHand : MonoBehaviour
 
     private void UpdatePlayerDeckUIWithNewCard(CardSO cardSO)
     {
-        Transform cardInstance = Instantiate(cardPrefab.transform, transform);
-        
+        Transform cardInstance = Instantiate(cardPrefab.transform, transform); 
         CardUI cardUI = cardInstance.GetComponent<CardUI>();
+
+        CardLogic cardLogic = cardInstance.AddComponent<CardLogic>();
+        cardLogic.SetCardType(cardSO.cardType, cardSO.cardSubType);
+
         cardUI.SetCard(cardSO);
         cardUI.FaceDownCard(!playable);
     }  
