@@ -6,13 +6,9 @@ public class PlayerHand : MonoBehaviour
 {
     [SerializeField] private GameObject cardPrefab;
     [SerializeField] private bool playable;
+
     [SerializeField] private List<CardSO> hand = new List<CardSO>();
     
-
-    public bool IsPlayable()
-    {
-        return playable;
-    }
     
     public void InitializePlayerDeck()
     {
@@ -65,6 +61,7 @@ public class PlayerHand : MonoBehaviour
         cardUI.FaceDownCard(!playable);
     }  
 
+    // TODO: Implement this to hand cards when instances switched
     public void UpdatePlayerDeckUI()
     {
         if (transform.childCount != hand.Count)
@@ -96,9 +93,8 @@ public class PlayerHand : MonoBehaviour
         // We declare the needed variables
         bool playCard = true;
         int randomCardIndex;
-        CardType cardType = CardType.Boom;
+        CardType cardType = CardType.Boom; // Initialization is needed and variable is not nullable
 
-        // We can play a card or not. Finally draw and change turn
         do 
         {
             randomCardIndex =  Random.Range(-1, hand.Count);
@@ -119,11 +115,12 @@ public class PlayerHand : MonoBehaviour
         if (playCard)
         {
             Debug.Log($"Plays card {cardType}");
-            hand.RemoveAt(randomCardIndex);
 
             GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
             CardUI cardUI = cardInstance.GetComponent<CardUI>();
             cardUI.FaceDownCard(false);
+            
+            PlayerPlayCard(cardInstance, randomCardIndex);
             
             DiscardDeckUI.Instance.AddCardToDiscardDeck(cardInstance);
         }   
