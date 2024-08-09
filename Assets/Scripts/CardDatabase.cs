@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class CardDatabase : MonoBehaviour
 {
     public static CardDatabase Instance { get; private set;}
-
-    //[SerializeField] private GameObject[] cardPrefabs;
+    
     [SerializeField] private CardSO[] cardsSO;
 
     /// <summary>
@@ -102,6 +102,11 @@ public class CardDatabase : MonoBehaviour
         totalDefuseCardsDrawn ++;
 
         return cardsSO[defuseCardIndex];
+    }
+
+    public List<CardSO> GetFirstThreeCardsFromDrawDeck()
+    {
+        return drawDeck.GetRange(0, 3);
     }
 
     public void CompleteDrawDeck()

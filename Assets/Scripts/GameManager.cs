@@ -33,6 +33,14 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SeeFuturePanelUI.Instance.ShowSeeFuturePanel();
+        }
+    }
+
     private void OnEnable() 
     {
         OnTurnChange += NonPlayablePlayerPlaysTurn;
@@ -47,6 +55,8 @@ public class GameManager : MonoBehaviour
     {
         currentTurn = Turn.Player1;
         Debug.Log($"{currentTurn} starts");
+
+        SeeFuturePanelUI.Instance.HideSeeFuturePanel();
 
         foreach (PlayerHand player in players)
         {
