@@ -33,14 +33,6 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SeeFuturePanelUI.Instance.ShowSeeFuturePanel();
-        }
-    }
-
     private void OnEnable() 
     {
         OnTurnChange += NonPlayablePlayerPlaysTurn;
@@ -66,9 +58,18 @@ public class GameManager : MonoBehaviour
         CardDatabase.Instance.CompleteDrawDeck();
     }
 
-    public void AddExtraTurnForNextPlayer()
+    private void AddExtraTurnForNextPlayer()
     {
         extraTurn = true;
+    }
+
+    private void NonPlayablePlayerPlaysTurn(Turn currentTurn) 
+    {
+        bool nonPlayablePlayer = currentTurn != Turn.Player1;
+        if (nonPlayablePlayer) 
+        {
+            StartCoroutine(players[1].PlayTurnAutomatically());
+        }
     }
 
     public void ChangeTurn(bool addExtraTurnToNextPlayer = false)
@@ -98,17 +99,13 @@ public class GameManager : MonoBehaviour
         OnTurnChange?.Invoke(currentTurn);
     }
 
-    private void NonPlayablePlayerPlaysTurn(Turn currentTurn) 
-    {
-        bool nonPlayablePlayer = currentTurn != Turn.Player1;
-        if (nonPlayablePlayer) 
-        {
-            StartCoroutine(players[1].PlayTurnAutomatically());
-        }
-    }
-
     public void GameOver()
     {
         Debug.Log($"!!! GAME OVER !!!");
+    }
+
+    public Turn GetCurrentTurn()
+    {
+        return currentTurn;
     }
 }

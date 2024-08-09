@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SeeFuturePanelUI : MonoBehaviour
 {
-
     public static SeeFuturePanelUI Instance { get; private set;}
 
     [SerializeField] private CardUI[] seeFutureCardsArray;
+    [SerializeField] private Button closeButton;
 
     private void Awake()
     {
@@ -16,6 +17,8 @@ public class SeeFuturePanelUI : MonoBehaviour
         }
 
         Instance = this;
+
+        closeButton.onClick.AddListener(HideSeeFuturePanel);
     }
 
     public void ShowSeeFuturePanel()

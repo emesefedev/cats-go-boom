@@ -68,6 +68,13 @@ public class CardLogic : MonoBehaviour
     private void PlaySeeFutureCard()
     {
         Debug.Log("See Future Card played");
+
+        Turn currentTurn = GameManager.Instance.GetCurrentTurn();
+
+        if (currentTurn == Turn.Player1)
+        {
+            SeeFuturePanelUI.Instance.ShowSeeFuturePanel();
+        }
     }
 
     private void PlayShuffleCard()
