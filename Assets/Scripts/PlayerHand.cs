@@ -158,12 +158,9 @@ public class PlayerHand : MonoBehaviour
         {
             Debug.Log($"Plays a card");
 
-            GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
-            CardUI cardUI = cardInstance.GetComponent<CardUI>();
+            GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;    
             
-            bool cardCanBePlayed = PlayerPlayCard(cardInstance, randomCardIndex);
-
-            cardUI.FaceDownCard(!cardCanBePlayed);
+            PlayerPlayCard(cardInstance, randomCardIndex);
         }  
 
         PlayerDrawCard();
@@ -216,7 +213,6 @@ public class PlayerHand : MonoBehaviour
 
     public void RemoveFirstCopyStartingAtTheEndOfTheHand(CardType cardType, CardSubType cardSubType)
     {
-        Debug.Log($"hand.Count  ={hand.Count} and totalChildren = {transform.childCount}");
         for (int i = hand.Count - 1; i >= 0; i--)
         {
             CardSO handCard = hand[i];

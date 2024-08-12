@@ -17,6 +17,11 @@ public class DiscardDeckUI : MonoBehaviour
     {
         CardDatabase.Instance.UpdateDiscardDeck(card);
         card.transform.SetParent(transform);
+
+        // All cards in discard deck must be visible
+        CardUI cardUI = card.GetComponent<CardUI>();
+        cardUI.FaceDownCard(false);
+
         DisableFirstVisibleChild();
     }
 

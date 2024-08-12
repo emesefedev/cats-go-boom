@@ -59,7 +59,8 @@ public class CardLogic : MonoBehaviour
     private bool PlayCatCard()
     {
         Debug.Log("Cat Card played");
-        Debug.Log($"Card is {cardSubType} subtype");
+
+        // TODO: Falta implementar el robar carta
 
         return cardPlayer.PlayerHasTwoEqualCardsInHand(cardType, cardSubType);
     }
