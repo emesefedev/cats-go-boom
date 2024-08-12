@@ -1,7 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+
+public class HandCard 
+{
+    private GameObject cardInstance;
+    private CardSO cardSO;
+
+    public HandCard(GameObject cardInstance, CardSO cardSO)
+    {
+        this.cardInstance = cardInstance;
+        this.cardSO = cardSO;
+    }
+}
 
 public class PlayerHand : MonoBehaviour
 {
@@ -16,7 +27,7 @@ public class PlayerHand : MonoBehaviour
         if (cardSO != null)
         {
             AddCardToPlayerHand(cardSO); // Logic
-            UpdatePlayerDeckUIWithNewCard(cardSO); // Visual
+            UpdatePlayerHandPanelWithNewCard(cardSO); // Visual
         }
         
     }
@@ -48,38 +59,22 @@ public class PlayerHand : MonoBehaviour
         return Instantiate(cardPrefab.transform, transform);
     }
 
-    private void SetUpNewCardInPlayerHandPanel(GameObject cardInstance, CardSO cardSO)
+    private void SetUpCardInPlayerHandPanel(GameObject cardInstance, CardSO cardSO)
     {
         // Card's Logic
-        AddAndSetUpCardLogic(cardInstance, cardSO);
+        SetUpCardLogic(cardInstance, cardSO);
 
         // Card's Visual
         SetUpCardVisual(cardInstance, cardSO);
     }
 
-    private void SetUpExistingCardInPlayerHandPanel(GameObject cardInstance, CardSO cardSO)
-    {      
-        GetAndSetUpCardLogic(cardInstance, cardSO);
-
-        SetUpCardVisual(cardInstance, cardSO);
-    }
-
-    private void AddAndSetUpCardLogic(GameObject cardInstance, CardSO cardSO)
+    private void SetUpCardLogic(GameObject cardInstance, CardSO cardSO)
     {
-        CardLogic cardLogic = cardInstance.AddComponent<CardLogic>();
+        if (!cardInstance.TryGetComponent<CardLogic>(out CardLogic cardLogic))
+        {
+            cardLogic = cardInstance.AddComponent<CardLogic>();
+        }
 
-        SetUpCardLogic(cardLogic, cardSO);
-    }
-
-     private void GetAndSetUpCardLogic(GameObject cardInstance, CardSO cardSO)
-    {
-        CardLogic cardLogic = cardInstance.GetComponent<CardLogic>();
-
-        SetUpCardLogic(cardLogic, cardSO);
-    }
-
-    private void SetUpCardLogic(CardLogic cardLogic, CardSO cardSO)
-    {
         cardLogic.SetCardType(cardSO.cardType, cardSO.cardSubType);
         cardLogic.SetCardPlayer(this);
     }
@@ -90,13 +85,13 @@ public class PlayerHand : MonoBehaviour
         cardUI.SetCard(cardSO, !playable);
     }
 
-    private void UpdatePlayerDeckUIWithNewCard(CardSO cardSO)
+    private void UpdatePlayerHandPanelWithNewCard(CardSO cardSO)
     {
         Transform cardInstance = InstantiateNewCardInPlayerHandPanel();
-        SetUpNewCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
+        SetUpCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
     }  
 
-    public void UpdatePlayerDeckUI()
+    public void UpdatePlayerHandPanel()
     {
         if (transform.childCount != hand.Count)
         {
@@ -108,7 +103,7 @@ public class PlayerHand : MonoBehaviour
             Transform cardInstance = transform.GetChild(i);
             CardSO cardSO = hand[i];
 
-            SetUpExistingCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
+            SetUpCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
         }
     }  
 
@@ -120,12 +115,20 @@ public class PlayerHand : MonoBehaviour
         if (cardCanBePlayed)
         {
             RemoveCardFromPlayerHandPanel(card, childIndex);
+
+            CardUI cardUI = card.GetComponent<CardUI>();
+            CardType cardType = cardUI.GetCardType();
+
+            if (cardType == CardType.Cat)
+            {
+                RemoveFirstCopyStartingAtTheEndOfTheHand(cardType, cardUI.GetCardSubType());
+            }
         }
 
         return cardCanBePlayed;
     }
 
-    public IEnumerator PlayTurnAutomatically()
+    public IEnumerator PlayerPlayTurnAutomatically()
     {
         // We declare the needed variables
         bool playCard = true;
@@ -181,7 +184,7 @@ public class PlayerHand : MonoBehaviour
         AddCardToPlayerHandPanel(cardSO);
     }
 
-    public void InitializePlayerDeck()
+    public void InitializePlayerHand()
     {
         for(int i = 0; i < 7; i++)
         {
@@ -191,7 +194,7 @@ public class PlayerHand : MonoBehaviour
         PlayerDrawDefuseCard();
     } 
 
-    public bool PlayerHasSameCardInHand(CardType cardType, CardSubType cardSubType)
+    public bool PlayerHasTwoEqualCardsInHand(CardType cardType, CardSubType cardSubType)
     {
         int totalCopies = 0;
 
@@ -213,6 +216,7 @@ public class PlayerHand : MonoBehaviour
 
     public void RemoveFirstCopyStartingAtTheEndOfTheHand(CardType cardType, CardSubType cardSubType)
     {
+        Debug.Log($"hand.Count  ={hand.Count} and totalChildren = {transform.childCount}");
         for (int i = hand.Count - 1; i >= 0; i--)
         {
             CardSO handCard = hand[i];
@@ -226,7 +230,7 @@ public class PlayerHand : MonoBehaviour
         Debug.LogError($"There's no copy of {cardType}+{cardSubType} to remove");
     }
 
-    public bool IsPlayable()
+    public bool PlayerIsPlayable()
     {
         return playable;
     }

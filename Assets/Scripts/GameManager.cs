@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         foreach (PlayerHand player in players)
         {
-            player.InitializePlayerDeck();
+            player.InitializePlayerHand();
         }
 
         CardDatabase.Instance.CompleteDrawDeck();
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         bool nonPlayablePlayer = currentTurn != Turn.Player1;
         if (nonPlayablePlayer) 
         {
-            StartCoroutine(players[1].PlayTurnAutomatically());
+            StartCoroutine(players[1].PlayerPlayTurnAutomatically());
         }
     }
 

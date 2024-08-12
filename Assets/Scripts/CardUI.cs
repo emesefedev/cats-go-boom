@@ -43,6 +43,14 @@ public class CardUI : MonoBehaviour
         return cardSO.cardType;
     }
 
+    public CardSubType GetCardSubType() {
+        if (cardSO == null)
+        {
+            Debug.LogError("No cardSO set");
+        }
+        return cardSO.cardSubType;
+    }
+
     public void SetCard(CardSO cardSO, bool isFaceDown)
     {
         SetCardSO(cardSO);

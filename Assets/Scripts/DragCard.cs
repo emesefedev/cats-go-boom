@@ -37,7 +37,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 Debug.LogError("playerHand should not be null");
             }
 
-            playerHand.UpdatePlayerDeckUI();
+            playerHand.UpdatePlayerHandPanel();
         }
 
         canvasGroup.blocksRaycasts = true;

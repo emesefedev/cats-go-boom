@@ -61,18 +61,7 @@ public class CardLogic : MonoBehaviour
         Debug.Log("Cat Card played");
         Debug.Log($"Card is {cardSubType} subtype");
 
-        if (cardPlayer.PlayerHasSameCardInHand(cardType, cardSubType))
-        {
-            Debug.Log("Cat card can be played");
-            cardPlayer.RemoveFirstCopyStartingAtTheEndOfTheHand(cardType, cardSubType);
-            
-            return true;
-        }
-        else
-        {
-            Debug.Log("Cat card can't be played");
-            return false;
-        }
+        return cardPlayer.PlayerHasTwoEqualCardsInHand(cardType, cardSubType);
     }
 
     private bool PlayDefuseCard()
@@ -98,7 +87,7 @@ public class CardLogic : MonoBehaviour
         Debug.Log("See Future Card played");
 
         // This will work only if Player1 is the only playable player
-        if (cardPlayer.IsPlayable()) 
+        if (cardPlayer.PlayerIsPlayable()) 
         {
             SeeFuturePanelUI.Instance.ShowSeeFuturePanel();
         }
