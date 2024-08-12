@@ -81,7 +81,7 @@ public class CardDatabase : MonoBehaviour
         }
     }
 
-    public CardSO DrawCard()
+    public CardSO DrawCardSOFromDrawDeck()
     {
         if (drawDeck.Count <= 0)
         {

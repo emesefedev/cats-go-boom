@@ -7,11 +7,23 @@ public class HandCard
     private GameObject cardInstance;
     private CardSO cardSO;
 
+    private CardUI cardUI;
+    private CardLogic cardLogic;
+
     public HandCard(GameObject cardInstance, CardSO cardSO)
     {
         this.cardInstance = cardInstance;
         this.cardSO = cardSO;
+
+        this.cardUI = cardInstance.GetComponent<CardUI>();
+        this.cardLogic = cardInstance.GetComponent<CardLogic>();
+
+        // Call set up card UI
+        // Call set up card Logic
     }
+
+    // Declare Set Up Card UI
+    // Declare Set Up Card Logic
 }
 
 public class PlayerHand : MonoBehaviour
@@ -20,7 +32,22 @@ public class PlayerHand : MonoBehaviour
     [SerializeField] private bool playable;
 
     [SerializeField] private List<CardSO> hand = new List<CardSO>();
+    [SerializeField] private List<HandCard> newHand = new List<HandCard>();
     
+
+    private void AddHandCardToPlayerHand(HandCard handCard)
+    {
+        newHand.Add(handCard);
+    }
+
+    private GameObject InstantiateNewCardInPlayerHandPanel()
+    {
+        return Instantiate(cardPrefab.transform, transform).gameObject;
+    }
+
+
+
+
 
     private void AddCardToPlayerHandPanel(CardSO cardSO)
     {
@@ -54,7 +81,7 @@ public class PlayerHand : MonoBehaviour
         AddCardToPlayerHandPanel(cardSO);
     }
 
-    private Transform InstantiateNewCardInPlayerHandPanel()
+    private Transform InstantiateNewCardTransformInPlayerHandPanel()
     {
         return Instantiate(cardPrefab.transform, transform);
     }
@@ -87,7 +114,7 @@ public class PlayerHand : MonoBehaviour
 
     private void UpdatePlayerHandPanelWithNewCard(CardSO cardSO)
     {
-        Transform cardInstance = InstantiateNewCardInPlayerHandPanel();
+        Transform cardInstance = InstantiateNewCardTransformInPlayerHandPanel();
         SetUpCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
     }  
 
@@ -169,7 +196,7 @@ public class PlayerHand : MonoBehaviour
 
     public void PlayerDrawCard()
     {
-        CardSO cardSO = CardDatabase.Instance.DrawCard();
+        CardSO cardSO = CardDatabase.Instance.DrawCardSOFromDrawDeck();
         CardType cardType = cardSO.cardType;
 
         if (cardType == CardType.Boom)
@@ -185,7 +212,11 @@ public class PlayerHand : MonoBehaviour
     {
         for(int i = 0; i < 7; i++)
         {
-            PlayerDrawCard();
+            CardSO cardSO = CardDatabase.Instance.DrawCardSOFromDrawDeck();
+            GameObject cardInstance = InstantiateNewCardInPlayerHandPanel();
+
+            HandCard handCard = new HandCard(cardInstance, cardSO);
+            AddHandCardToPlayerHand(handCard);
         }
 
         PlayerDrawDefuseCard();
