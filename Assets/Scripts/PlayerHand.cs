@@ -10,44 +10,91 @@ public class PlayerHand : MonoBehaviour
 
     [SerializeField] private List<CardSO> hand = new List<CardSO>();
     
-    private void AddCardToPlayerHand(CardSO card) 
+
+    private void AddCardToPlayerHandPanel(CardSO cardSO)
     {
-        if (card != null)
+        if (cardSO != null)
         {
-            hand.Add(card);
-            UpdatePlayerDeckUIWithNewCard(card);
+            AddCardToPlayerHand(cardSO); // Logic
+            UpdatePlayerDeckUIWithNewCard(cardSO); // Visual
         }
+        
     }
 
-    private void PlayerDrawDefuseCard()
+    private void RemoveCardFromPlayerHandPanel(GameObject card, int childIndex)
     {
-        CardSO card = CardDatabase.Instance.DrawDefuseCard();
-        AddCardToPlayerHand(card);
+        RemoveCardFromPlayerHandAtIndex(childIndex); // Logic
+        DiscardDeckUI.Instance.AddCardToDiscardDeck(card); // Visual
     }
 
-    private void UpdatePlayerDeckUIWithNewCard(CardSO cardSO)
+    private void AddCardToPlayerHand(CardSO cardSO) 
     {
-        Transform cardInstance = Instantiate(cardPrefab.transform, transform); 
-        CardUI cardUI = cardInstance.GetComponent<CardUI>();
+        hand.Add(cardSO);
+    }
 
-        CardLogic cardLogic = cardInstance.AddComponent<CardLogic>();
-        cardLogic.SetCardType(cardSO.cardType, cardSO.cardSubType);
-        cardLogic.SetCardPlayer(this);
-
-        cardUI.SetCard(cardSO);
-        cardUI.FaceDownCard(!playable);
-    }  
-
-    private void RemoveCardFromHandAtIndex(int index)
+    private void RemoveCardFromPlayerHandAtIndex(int index)
     {
         hand.RemoveAt(index);
     }
 
-    private void RemoveCardFromHandPanel(GameObject card, int childIndex)
+    private void PlayerDrawDefuseCard()
     {
-        DiscardDeckUI.Instance.AddCardToDiscardDeck(card); // Visual
-        RemoveCardFromHandAtIndex(childIndex); // Logic
+        CardSO cardSO = CardDatabase.Instance.DrawDefuseCard();
+        AddCardToPlayerHandPanel(cardSO);
     }
+
+    private Transform InstantiateNewCardInPlayerHandPanel()
+    {
+        return Instantiate(cardPrefab.transform, transform);
+    }
+
+    private void SetUpNewCardInPlayerHandPanel(GameObject cardInstance, CardSO cardSO)
+    {
+        // Card's Logic
+        AddAndSetUpCardLogic(cardInstance, cardSO);
+
+        // Card's Visual
+        SetUpCardVisual(cardInstance, cardSO);
+    }
+
+    private void SetUpExistingCardInPlayerHandPanel(GameObject cardInstance, CardSO cardSO)
+    {      
+        GetAndSetUpCardLogic(cardInstance, cardSO);
+
+        SetUpCardVisual(cardInstance, cardSO);
+    }
+
+    private void AddAndSetUpCardLogic(GameObject cardInstance, CardSO cardSO)
+    {
+        CardLogic cardLogic = cardInstance.AddComponent<CardLogic>();
+
+        SetUpCardLogic(cardLogic, cardSO);
+    }
+
+     private void GetAndSetUpCardLogic(GameObject cardInstance, CardSO cardSO)
+    {
+        CardLogic cardLogic = cardInstance.GetComponent<CardLogic>();
+
+        SetUpCardLogic(cardLogic, cardSO);
+    }
+
+    private void SetUpCardLogic(CardLogic cardLogic, CardSO cardSO)
+    {
+        cardLogic.SetCardType(cardSO.cardType, cardSO.cardSubType);
+        cardLogic.SetCardPlayer(this);
+    }
+
+    private void SetUpCardVisual(GameObject cardInstance, CardSO cardSO)
+    {
+        CardUI cardUI = cardInstance.GetComponent<CardUI>();
+        cardUI.SetCard(cardSO, !playable);
+    }
+
+    private void UpdatePlayerDeckUIWithNewCard(CardSO cardSO)
+    {
+        Transform cardInstance = InstantiateNewCardInPlayerHandPanel();
+        SetUpNewCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
+    }  
 
     public void UpdatePlayerDeckUI()
     {
@@ -59,11 +106,9 @@ public class PlayerHand : MonoBehaviour
         for (int i = 0; i < hand.Count; i++)
         {
             Transform cardInstance = transform.GetChild(i);
-            CardUI cardUI = cardInstance.GetComponent<CardUI>();
-
             CardSO cardSO = hand[i];
 
-            cardUI.SetCard(cardSO);
+            SetUpExistingCardInPlayerHandPanel(cardInstance.gameObject, cardSO);
         }
     }  
 
@@ -74,7 +119,7 @@ public class PlayerHand : MonoBehaviour
         
         if (cardCanBePlayed)
         {
-            RemoveCardFromHandPanel(card, childIndex);
+            RemoveCardFromPlayerHandPanel(card, childIndex);
         }
 
         return cardCanBePlayed;
@@ -133,7 +178,7 @@ public class PlayerHand : MonoBehaviour
         }
 
 
-        AddCardToPlayerHand(cardSO);
+        AddCardToPlayerHandPanel(cardSO);
     }
 
     public void InitializePlayerDeck()
@@ -173,7 +218,7 @@ public class PlayerHand : MonoBehaviour
             CardSO handCard = hand[i];
             if (handCard.cardType == cardType && handCard.cardSubType == cardSubType)
             {
-                RemoveCardFromHandPanel(transform.GetChild(i).gameObject, i);
+                RemoveCardFromPlayerHandPanel(transform.GetChild(i).gameObject, i);
                 return;
             }
         }

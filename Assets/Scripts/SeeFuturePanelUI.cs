@@ -38,7 +38,7 @@ public class SeeFuturePanelUI : MonoBehaviour
         List<CardSO> seeFutureCardsSO = CardDatabase.Instance.GetFirstThreeCardsFromDrawDeck();
         for (int i = 0; i < seeFutureCardsArray.Length; i++)
         {
-            seeFutureCardsArray[i].SetCard(seeFutureCardsSO[i]);
+            seeFutureCardsArray[i].SetCard(seeFutureCardsSO[i], false);
         }
     }
 }

@@ -43,9 +43,11 @@ public class CardUI : MonoBehaviour
         return cardSO.cardType;
     }
 
-    public void SetCard(CardSO cardSO)
+    public void SetCard(CardSO cardSO, bool isFaceDown)
     {
         SetCardSO(cardSO);
+
+        FaceDownCard(isFaceDown);
 
         typeIndex = (int)cardSO.cardType;
         cardColor = Colors.cardColors[typeIndex];
