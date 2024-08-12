@@ -10,16 +10,6 @@ public class PlayerHand : MonoBehaviour
 
     [SerializeField] private List<CardSO> hand = new List<CardSO>();
     
-    public void InitializePlayerDeck()
-    {
-        for(int i = 0; i < 7; i++)
-        {
-            PlayerDrawCard();
-        }
-
-        PlayerDrawDefuseCard();
-    } 
-
     private void AddCardToPlayerHand(CardSO card) 
     {
         if (card != null)
@@ -27,20 +17,6 @@ public class PlayerHand : MonoBehaviour
             hand.Add(card);
             UpdatePlayerDeckUIWithNewCard(card);
         }
-    }
-
-    public void PlayerDrawCard()
-    {
-        CardSO cardSO = CardDatabase.Instance.DrawCard();
-        CardType cardType = cardSO.cardType;
-
-        if (cardType == CardType.Boom)
-        {
-            GameManager.Instance.GameOver();
-        }
-
-
-        AddCardToPlayerHand(cardSO);
     }
 
     private void PlayerDrawDefuseCard()
@@ -56,12 +32,23 @@ public class PlayerHand : MonoBehaviour
 
         CardLogic cardLogic = cardInstance.AddComponent<CardLogic>();
         cardLogic.SetCardType(cardSO.cardType, cardSO.cardSubType);
+        cardLogic.SetCardPlayer(this);
 
         cardUI.SetCard(cardSO);
         cardUI.FaceDownCard(!playable);
     }  
 
-    // TODO: Implement this to hand cards when instances switched
+    private void RemoveCardFromHandAtIndex(int index)
+    {
+        hand.RemoveAt(index);
+    }
+
+    private void RemoveCardFromHandPanel(GameObject card, int childIndex)
+    {
+        DiscardDeckUI.Instance.AddCardToDiscardDeck(card); // Visual
+        RemoveCardFromHandAtIndex(childIndex); // Logic
+    }
+
     public void UpdatePlayerDeckUI()
     {
         if (transform.childCount != hand.Count)
@@ -80,12 +67,17 @@ public class PlayerHand : MonoBehaviour
         }
     }  
 
-    public void PlayerPlayCard(GameObject card, int childIndex)
+    public bool PlayerPlayCard(GameObject card, int childIndex)
     {
         CardLogic cardLogic = card.GetComponent<CardLogic>();
-        cardLogic.PlayCard();
+        bool cardCanBePlayed = cardLogic.PlayCard();
         
-        hand.RemoveAt(childIndex);
+        if (cardCanBePlayed)
+        {
+            RemoveCardFromHandPanel(card, childIndex);
+        }
+
+        return cardCanBePlayed;
     }
 
     public IEnumerator PlayTurnAutomatically()
@@ -120,14 +112,77 @@ public class PlayerHand : MonoBehaviour
 
             GameObject cardInstance = transform.GetChild(randomCardIndex).gameObject;
             CardUI cardUI = cardInstance.GetComponent<CardUI>();
-            cardUI.FaceDownCard(false);
             
-            PlayerPlayCard(cardInstance, randomCardIndex);
-            
-            DiscardDeckUI.Instance.AddCardToDiscardDeck(cardInstance);
+            bool cardCanBePlayed = PlayerPlayCard(cardInstance, randomCardIndex);
+
+            cardUI.FaceDownCard(!cardCanBePlayed);
         }  
 
         PlayerDrawCard();
         GameManager.Instance.ChangeTurn();
+    }
+
+    public void PlayerDrawCard()
+    {
+        CardSO cardSO = CardDatabase.Instance.DrawCard();
+        CardType cardType = cardSO.cardType;
+
+        if (cardType == CardType.Boom)
+        {
+            GameManager.Instance.GameOver();
+        }
+
+
+        AddCardToPlayerHand(cardSO);
+    }
+
+    public void InitializePlayerDeck()
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            PlayerDrawCard();
+        }
+
+        PlayerDrawDefuseCard();
+    } 
+
+    public bool PlayerHasSameCardInHand(CardType cardType, CardSubType cardSubType)
+    {
+        int totalCopies = 0;
+
+        foreach (CardSO cardSO in hand)
+        {
+            if (cardSO.cardType == cardType && cardSO.cardSubType == cardSubType)
+            {
+                totalCopies++;
+                Debug.Log($"Total copies in hand of {cardType}+{cardSubType} = {totalCopies}");
+                if (totalCopies >= 2)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;   
+    }
+
+    public void RemoveFirstCopyStartingAtTheEndOfTheHand(CardType cardType, CardSubType cardSubType)
+    {
+        for (int i = hand.Count - 1; i >= 0; i--)
+        {
+            CardSO handCard = hand[i];
+            if (handCard.cardType == cardType && handCard.cardSubType == cardSubType)
+            {
+                RemoveCardFromHandPanel(transform.GetChild(i).gameObject, i);
+                return;
+            }
+        }
+
+        Debug.LogError($"There's no copy of {cardType}+{cardSubType} to remove");
+    }
+
+    public bool IsPlayable()
+    {
+        return playable;
     }
 }

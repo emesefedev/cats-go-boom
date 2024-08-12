@@ -17,9 +17,12 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
                 Transform player = dragCard.GetOriginalParent();
                 int childIndex = dragCard.GetChildIndex();
                 
-                player.GetComponent<PlayerHand>().PlayerPlayCard(card, childIndex);
+                bool cardCanBePlayed = player.GetComponent<PlayerHand>().PlayerPlayCard(card, childIndex);
 
-                DiscardDeckUI.Instance.AddCardToDiscardDeck(card);
+                if (!cardCanBePlayed)
+                {
+                    dragCard.ChangeParent(player);
+                }
             }
         }
     }

@@ -983,7 +983,7 @@ GameObject:
   - component: {fileID: 734703969}
   - component: {fileID: 734703968}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Close Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1297,8 +1297,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2072598794}
-  - {fileID: 131052319}
   - {fileID: 734703967}
+  - {fileID: 131052319}
   m_Father: {fileID: 867052079}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1360,6 +1360,7 @@ MonoBehaviour:
   - {fileID: 1622085651}
   - {fileID: 1313151532}
   - {fileID: 1485631204}
+  closeButton: {fileID: 734703968}
 --- !u!1 &888737156
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class CardLogic : MonoBehaviour
 {
-    public Action PlayCard;
+    public Func<bool> PlayCard;
     
     private CardType cardType;
     private CardSubType cardSubType;
+
+    private PlayerHand cardPlayer;
 
     public void SetCardType(CardType cardType, CardSubType cardSubType)
     {
@@ -14,6 +16,11 @@ public class CardLogic : MonoBehaviour
         this.cardSubType = cardSubType;
 
         SetPlayCardAction();
+    }
+
+    public void SetCardPlayer(PlayerHand cardPlayer)
+    {
+        this.cardPlayer = cardPlayer;
     }
 
     public void SetPlayCardAction()
@@ -34,60 +41,85 @@ public class CardLogic : MonoBehaviour
         };
     }
 
-    private void PlayAttackCard()
+    private bool PlayAttackCard()
     {
         Debug.Log("Attack Card played");
+        
         GameManager.Instance.ChangeTurn(true);
+        
+        return true;
     }
 
-    private void PlayBoomCard()
+    private bool PlayBoomCard()
     {
         Debug.Log("Boom Card played");
+        return true;
     }
 
-    private void PlayCatCard()
+    private bool PlayCatCard()
     {
         Debug.Log("Cat Card played");
-    }
+        Debug.Log($"Card is {cardSubType} subtype");
 
-    private void PlayDefuseCard()
-    {
-        Debug.Log("Defuse Card played");
-    }
-
-    private void PlayFavorCard()
-    {
-        Debug.Log("Favor Card played");
-    }
-
-    private void PlayNopeCard()
-    {
-        Debug.Log("Nope Card played");
-    }
-
-    private void PlaySeeFutureCard()
-    {
-        Debug.Log("See Future Card played");
-
-        Turn currentTurn = GameManager.Instance.GetCurrentTurn();
-
-        if (currentTurn == Turn.Player1)
+        if (cardPlayer.PlayerHasSameCardInHand(cardType, cardSubType))
         {
-            SeeFuturePanelUI.Instance.ShowSeeFuturePanel();
+            Debug.Log("Cat card can be played");
+            cardPlayer.RemoveFirstCopyStartingAtTheEndOfTheHand(cardType, cardSubType);
+            
+            return true;
+        }
+        else
+        {
+            Debug.Log("Cat card can't be played");
+            return false;
         }
     }
 
-    private void PlayShuffleCard()
+    private bool PlayDefuseCard()
+    {
+        Debug.Log("Defuse Card played");
+        return true;
+    }
+
+    private bool PlayFavorCard()
+    {
+        Debug.Log("Favor Card played");
+        return true;
+    }
+
+    private bool PlayNopeCard()
+    {
+        Debug.Log("Nope Card played");
+        return true;
+    }
+
+    private bool PlaySeeFutureCard()
+    {
+        Debug.Log("See Future Card played");
+
+        // This will work only if Player1 is the only playable player
+        if (cardPlayer.IsPlayable()) 
+        {
+            SeeFuturePanelUI.Instance.ShowSeeFuturePanel();
+        }
+
+        return true;
+    }
+
+    private bool PlayShuffleCard()
     {
         Debug.Log("Shuffle Card played");
         
         // TODO: Make something visual to tell the player the draw deck has been shuffled
         CardDatabase.Instance.ShuffleDeck();
+
+        return true;
     }
 
-    private void PlaySkipCard()
+    private bool PlaySkipCard()
     {
         Debug.Log("Skip Card played");
         GameManager.Instance.ChangeTurn();
+        return true;
     }
 }
