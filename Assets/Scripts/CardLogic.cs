@@ -101,7 +101,7 @@ public class CardLogic : MonoBehaviour
         Debug.Log("Shuffle Card played");
         
         // TODO: Make something visual to tell the player the draw deck has been shuffled
-        CardDatabase.Instance.ShuffleDeck();
+        CardDatabase.Instance.ShuffleDrawDeck();
 
         return true;
     }
