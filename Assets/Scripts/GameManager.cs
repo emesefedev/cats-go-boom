@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         currentTurn = Turn.Player1;
-        Debug.Log($"{currentTurn} starts");
+        Debug.Log($"{currentTurn} starts"); // TODO: Make this random in the future
 
         SeeFuturePanelUI.Instance.HideSeeFuturePanel();
 
@@ -65,10 +65,11 @@ public class GameManager : MonoBehaviour
 
     private void NonPlayablePlayerPlaysTurn(Turn currentTurn) 
     {
-        bool nonPlayablePlayer = currentTurn != Turn.Player1;
+        bool nonPlayablePlayer = currentTurn != Turn.Player1; // This assumes that only player 1 is playable. In the future it would be convenient to use PlayerIsPlayable
+        
         if (nonPlayablePlayer) 
         {
-            StartCoroutine(players[1].PlayerPlayTurnAutomatically());
+            StartCoroutine(players[1].PlayerPlayTurnAutomatically()); // This assumes that there are only two players
         }
     }
 

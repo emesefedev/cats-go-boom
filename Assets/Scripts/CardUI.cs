@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour
 {
-    private CardSO cardSO;
+    [SerializeField] private CardSO cardSO;
 
     [SerializeField] private Image cardBorder;
     [SerializeField] private Image cardIllustration;

@@ -37,13 +37,13 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 Debug.LogError("playerHand should not be null");
             }
 
-            playerHand.UpdatePlayerHandPanel();
+            playerHand.ReorderPlayerHand(childIndex);
         }
 
         canvasGroup.blocksRaycasts = true;
     }   
 
-    public void ChangeParent(Transform newParent)
+    public void ChangeParentToReturnTo(Transform newParent)
     {
         parentToReturnTo = newParent;
     }

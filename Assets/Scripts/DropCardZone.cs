@@ -17,11 +17,11 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
                 Transform player = dragCard.GetOriginalParent();
                 int childIndex = dragCard.GetChildIndex();
                 
-                bool cardCanBePlayed = player.GetComponent<PlayerHand>().PlayerPlayCard(card, childIndex);
+                bool cardCanBePlayed = player.GetComponent<PlayerHand>().PlayerPlayCard(childIndex);
 
                 if (!cardCanBePlayed)
                 {
-                    dragCard.ChangeParent(player);
+                    dragCard.ChangeParentToReturnTo(player);
                 }
             }
         }
@@ -33,7 +33,7 @@ public class DropCardZone : MonoBehaviour, IDropHandler, IPointerEnterHandler
         
         if (draggedGameObject != null)
         {
-            draggedGameObject.GetComponent<DragCard>().ChangeParent(transform);
+            draggedGameObject.GetComponent<DragCard>().ChangeParentToReturnTo(transform);
         }
     }
 }

@@ -13,14 +13,13 @@ public class DiscardDeckUI : MonoBehaviour
         Instance = this;
     }
 
-    public void AddCardToDiscardDeck(GameObject card)
+    public void AddCardToDiscardDeck(HandCard handCard)
     {
-        CardDatabase.Instance.UpdateDiscardDeck(card);
-        card.transform.SetParent(transform);
+        CardDatabase.Instance.AddCardToDiscardDeck(handCard);
+        handCard.SetParent(transform);
 
         // All cards in discard deck must be visible
-        CardUI cardUI = card.GetComponent<CardUI>();
-        cardUI.FaceDownCard(false);
+        handCard.FaceDownCard(false);
 
         DisableFirstVisibleChild();
     }
